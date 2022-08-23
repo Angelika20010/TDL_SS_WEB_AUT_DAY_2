@@ -1,6 +1,6 @@
 class BasePage {
   static get url() {
-    return "/";
+    return "https://demoqa.com/";
   }
 
   static visit(options) {

@@ -1,4 +1,9 @@
+import CheckBoxPage from "../../pageObjects/CheckBoxPage";
+import RadioButtonsPage from "../../pageObjects/RadioButtonsPage";
 import TextBoxPage from "../../pageObjects/textBoxPage";
+import WebTablesPage from "../../pageObjects/WebTablesPage";
+import ButtonsPage from "../../pageObjects/ButtonsPage";
+
 
 context("Elements Page", () => {
   context("Text box scenarios", () => {
@@ -10,11 +15,44 @@ context("Elements Page", () => {
     // fill in textboxes with necessary information
     // validate the paragraphs
     it("Filling in Text Boxes", () => {
-      // add the necessary steps
+      TextBoxPage.FullName.type("Anzelika");
+      TextBoxPage.Email.type("anzelikabureka@gmail.com");
+      TextBoxPage.CurrentAddress.type("Current Address");
+      TextBoxPage.PernamentAddress.type("Permanent Address");
+      TextBoxPage.Submit.click()
+      TextBoxPage.Output1.should("have.text", "Name:Anzelika");
+      TextBoxPage.Output2.should("have.text", "Email:anzelikabureka@gmail.com");
+      TextBoxPage.validCurrentAddressField.should("have.text", "Current Address :Current Address ");
+      TextBoxPage.validPermanentAddressField.should("have.text", "Permananet Address :Permanent Address");
     });
   });
 
   context("Check box scenarios", () => {
+    beforeEach(() => {
+      CheckBoxPage.visit();
+    });
+
+    it("Add", () => {
+      CheckBoxPage.Plus.click();
+      CheckBoxPage.Notes.click();
+      CheckBoxPage.React.click();
+      CheckBoxPage.Angular.click();
+      CheckBoxPage.General.click();
+      CheckBoxPage.Excel.click();
+      CheckBoxPage.Result.should("contain.text", "notes");
+      CheckBoxPage.Result.should("contain.text", "react");
+      CheckBoxPage.Result.should("contain.text", "angular");
+      CheckBoxPage.Result.should("contain.text", "general");
+      CheckBoxPage.Result.should("contain.text", "excelFile");
+
+    })
+
+    it("Add2" , () => {
+      CheckBoxPage.Plus.click();
+      CheckBoxPage.Office.click();
+      CheckBoxPage.Result.should("contain.text", "office")
+      
+    })
     // Create CheckBoxPage page object
     // Create checkbox scenario 1:
     // Click the "+"/expand button
@@ -30,6 +68,20 @@ context("Elements Page", () => {
   context("Radio button scenarios", () => {
     // Create RadioButtons page object
     // Scenario 1:
+    beforeEach(() => {
+      RadioButtonsPage.visit();
+    });
+
+    it("Scenario1", () => {
+      RadioButtonsPage.Yes.click();
+      RadioButtonsPage.Message.should("contain.text", "Yes");
+      RadioButtonsPage.Impressive.click();
+      RadioButtonsPage.Message.should("contain.text", "Impressive");
+      RadioButtonsPage.No.should("be.disabled")
+
+
+
+    })
     // Click yesButton
     // validate the message
     // click impressiveButton
@@ -38,8 +90,35 @@ context("Elements Page", () => {
   });
 
   context("Web tables scenarios", () => {
+
+    beforeEach(() => {
+      WebTablesPage.visit();
+    });
+
+    it("Scenario1", () => {
+      WebTablesPage.Addbutton.click();
+      // TextBoxPage.FullName.type("Anzelika");
+      WebTablesPage.First.type("Anzelika");
+      WebTablesPage.Second.type("Bureka");
+      WebTablesPage.Email.type("anzelikabureka@gmail.com");
+      WebTablesPage.Age.type("20");
+      WebTablesPage.Salary.type("1000");
+      WebTablesPage.Department.type("Departament");
+      WebTablesPage.Sub.click();
+      WebTablesPage.searchInfo.type("Anzelika");
+      WebTablesPage.name.contains("Anzelika").and('be.visible') ;
+
+    })
+
+    it.only("Scenario2", () => {
+      
+      
+    })
+
+
     // Create WebTables page object
     // Create scenario 1:
+
     // Click add record button
     // fill in the necessary information
     // click submit button
@@ -52,9 +131,24 @@ context("Elements Page", () => {
   });
 
   context("Buttons scenarios", () => {
+    beforeEach(() => {
+      ButtonsPage.visit();
+    });
+
+    it("Scenario1", () => {
+      ButtonsPage.twobutton.dblclick();
+      ButtonsPage.validatebutton.should("have.text", "You have done a double click");
+      ButtonsPage.rightclickbutton.rightclick();
+      ButtonsPage.validatebutton2.should("have.text", "You have done a right click");
+      ButtonsPage.clickme.click();
+      ButtonsPage.validatebutton3.should("have.text", "You have done a dynamic click");
+
+
+    })
     // Create buttons clicking scenario
     // Create Buttons page
     // Check documentation https://docs.cypress.io/api/commands/and for how to perform different types of clicking
+    
     // Click Double click button
     // Validate the double click message
     // Click rightclick button
